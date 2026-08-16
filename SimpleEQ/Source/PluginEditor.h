@@ -23,14 +23,15 @@ struct LookAndFeel : juce::LookAndFeel_V4
 
 struct RotarySliderWithLabels : juce::Slider
 {
-    RotarySliderWithLabels(juce::RangedAudioParameter& rap, const juce::String& unitSuffix) : 
-        juce::Slider(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag, 
-        juce::Slider::TextEntryBoxPosition::NoTextBox),
+    RotarySliderWithLabels(juce::RangedAudioParameter& rap, const juce::String& unitSuffix) :
+        juce::Slider(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag,
+            juce::Slider::TextEntryBoxPosition::NoTextBox),
         param(&rap),
         suffix(unitSuffix)
     {
         setLookAndFeel(&lnf);
     }
+
     ~RotarySliderWithLabels()
     {
         setLookAndFeel(nullptr);
@@ -42,26 +43,27 @@ struct RotarySliderWithLabels : juce::Slider
     juce::String getDisplayString() const;
 private:
     LookAndFeel lnf;
+
     juce::RangedAudioParameter* param;
     juce::String suffix;
 };
 
 struct ResponseCurveComponent : juce::Component,
-    juce::AudioProcessorParameter::Listener, juce::Timer
+    juce::AudioProcessorParameter::Listener,
+    juce::Timer
 {
     ResponseCurveComponent(SimpleEQAudioProcessor&);
     ~ResponseCurveComponent();
 
     void parameterValueChanged(int parameterIndex, float newValue) override;
 
-    void parameterGestureChanged(int parameterIndex, bool gestureIsStarting) override {};
+    void parameterGestureChanged(int parameterIndex, bool gestureIsStarting) override {}
 
     void timerCallback() override;
 
     void paint(juce::Graphics& g) override;
 private:
     SimpleEQAudioProcessor& audioProcessor;
-
     juce::Atomic<bool> parametersChanged{ false };
 
     MonoChain monoChain;
@@ -84,6 +86,7 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     SimpleEQAudioProcessor& audioProcessor;
+
 
     RotarySliderWithLabels peakFreqSlider,
         peakGainSlider,
